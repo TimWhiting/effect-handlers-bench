@@ -2,7 +2,7 @@ module main
 
 import std/os/env
 
-effect state
+linear effect state
   fun get(): int
   fun set(i : int): ()
 
@@ -22,7 +22,7 @@ fun run(n : int)
   countdown()
 
 pub fun main()
-  val n = get-args().head("").parse-int-default(5)
+  val n = get-args().head("").parse-int.default(5)
   val r = run(n)
   println(r)
 

@@ -2,7 +2,7 @@ module main
 
 import std/os/env
 
-effect fun emit(e : int) : ()
+linear effect fun emit(e : int) : ()
 
 fun range(l : int, u : int)
   if(l > u)
@@ -20,7 +20,7 @@ fun run(n : int)
   s
 
 pub fun main()
-  val n = get-args().head("").parse-int-default(5)
+  val n = get-args().head("").parse-int.default(5)
   val r = run(n)
   println(r)
 

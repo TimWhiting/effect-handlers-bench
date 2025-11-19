@@ -2,7 +2,7 @@ module main
 
 import std/os/env
 
-effect fun prime(e : int) : bool
+linear effect fun prime(e : int) : bool
 
 fun primes(i : int, n : int, a : int): <div,prime> int
   if (i >= n)
@@ -10,7 +10,7 @@ fun primes(i : int, n : int, a : int): <div,prime> int
     else
       if prime(i)
         then
-          with fun prime(e)
+          with override fun prime(e)
             if (e % i == 0)
               then False
               else prime(e)
@@ -24,7 +24,7 @@ pub fun run(n : int)
   primes(2, n, 0)
 
 pub fun main()
-  val n = get-args().head("").parse-int-default(10)
+  val n = get-args().head("").parse-int.default(10)
   val r = run(n)
   println(r)
 

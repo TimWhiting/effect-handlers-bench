@@ -2,9 +2,8 @@ module main
 
 import std/os/env
 
-effect flip
+effect ndet
   ctl flip() : bool
-effect fail
   ctl fail<a>() : a
 
 fun choice(n : int)
@@ -26,13 +25,14 @@ fun hash((a,b,c)) : int
   (53 * a + 2809 * b + 148877 * c) % 1000000007
 
 fun run(n : int, s : int) : div int
-  with ctl flip()
-    ((resume(True) : int) + resume(False)) % 1000000007
-  with ctl fail()
-    0
+  with handler
+    ctl flip()
+      ((resume(True) : int) + resume(False)) % 1000000007
+    ctl fail()
+      0
   hash(triple(n, s))
 
 pub fun main()
-  val n = get-args().head("").parse-int-default(10)
+  val n = get-args().head("").parse-int.default(10)
   val r = run(n, n)
   println(r)
