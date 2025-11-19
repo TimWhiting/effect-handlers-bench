@@ -7,6 +7,7 @@ ENV OPAMSOLVERTIMEOUT=600
 
 ARG UID
 ARG GID
+ARG TARGETARCH
 
 # Get the basic stuff
 RUN apt-get update && \
@@ -26,8 +27,8 @@ WORKDIR /home/ubuntu
 
 # Install hyperfine
 RUN sudo apt install -y wget
-RUN export bleah=$(arch); wget https://github.com/sharkdp/hyperfine/releases/download/v1.15.0/hyperfine_1.15.0_amd64.deb
-RUN sudo dpkg -i hyperfine_1.15.0_amd64.deb
+RUN wget https://github.com/sharkdp/hyperfine/releases/download/v1.15.0/hyperfine_1.15.0_${TARGETARCH}.deb
+RUN sudo dpkg -i hyperfine_1.15.0_${TARGETARCH}.deb
 
 # Configure tzdata
 RUN echo 'tzdata tzdata/Areas select Europe' | sudo debconf-set-selections
